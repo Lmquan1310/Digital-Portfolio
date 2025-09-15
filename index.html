@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lê Minh Quân | Cyber Security Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Theme Variables */
+    :root {
+      --bg-light: #121212;
+      --bg-dark: #1e1e1e;
+      --accent: #00D8FF;
+      --accent-hover: #009ECC;
+      --text-primary: #E0E0E0;
+      --text-secondary: #A0A0A0;
+      --border: rgba(255, 255, 255, 0.1);
+      --section-padding: 100px;
+      --card-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      --transition: all 0.3s ease;
+    }
+
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      background: var(--accent);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(30,30,30,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+    header.scrolled { padding: 10px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+    }
+    header h1 {
+      font-weight: 600;
+      font-size: 1.75rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header h1 i {
+      font-size: 1.5rem;
+    }
+    .nav { display: flex; gap: 1.5rem; }
+    .nav a {
+      position: relative;
+      font-weight: 500;
+      padding: 0.5rem;
+      transition: var(--transition);
+    }
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--transition);
+    }
+    .nav a:hover { color: var(--accent-hover); }
+    .nav a:hover::after { transform: scaleX(1); }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #0F2027 0%, #2C5364 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 180px 0 100px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: var(--accent);
+      opacity: 0.1;
+      border-radius: 50%;
+      top: -200px;
+      right: -200px;
+    }
+    .hero-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .profile-image {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      border: 4px solid var(--accent);
+      object-fit: cover;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+    }
+    .profile-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 32px rgba(0,216,255,0.3);
+    }
+    .hero-text {
+      text-align: left;
+    }
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      animation: slideFadeIn 1s forwards 0.3s;
+    }
+    .hero p {
+      font-size: 1.125rem;
+      animation: slideFadeIn 1s forwards 0.6s;
+      max-width: 500px;
+    }
+
+    /* Project Cards */
+    .project-card {
+      background: var(--bg-dark);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--transition);
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+    }
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+    .project-card h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .project-card ul {
+      list-style: none;
+    }
+    .project-card ul li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .project-card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* Skills Section */
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .skills-list li {
+      background: var(--bg-dark);
+      padding: .75rem 1.25rem;
+      border-radius: 50px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .skills-list li i {
+      color: var(--accent);
+    }
+    .skills-list li:hover {
+      transform: scale(1.05);
+      border-color: var(--accent);
+    }
+
+    /* Contact Form */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 500px;
+      background: var(--bg-dark);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border);
+    }
+    input, textarea {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: .75rem;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0,216,255,0.2);
+    }
+    button {
+      padding: 1rem;
+      border: none;
+      border-radius: .75rem;
+      background: var(--accent);
+      color: #121212;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    button:hover {
+      background: var(--accent-hover);
+      transform: scale(1.03);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-text {
+        text-align: center;
+      }
+      .nav {
+        display: none;
+      }
+      .mobile-menu {
+        display: block;
+      }
+      .profile-image {
+        width: 200px;
+        height: 200px;
+      }
+    }
+    .social-icons {
+    font-size: 50px;
+    cursor: pointer;
+    }
+    .fa-facebook:hover,.fa-instagram:hover,.fa-twitter:hover,.fa-linkedin:hover {
+        color: grey;
+    }
+    .fab {
+        color: rgb(66, 60, 60);
+    }
+    /* Animations */
+    @keyframes slideFadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-shield-alt"></i> Lê Minh Quân</h1>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero visible">
+    <div class="container">
+      <div class="hero-content">
+        <img src="profile-picture.jpg" alt="Lê Minh Quân" class="profile-image">
+        <div class="hero-text">
+          <h2>Hi, I'm Lê Minh Quân</h2>
+          <p>BSc Cyber Security student at British University Vietnam. I am passionate about threat analysis, secure design, and hands-on security tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">Objectives</h2>
+      <p>I am a motivated cybersecurity student seeking an internship to apply my knowledge, contribute to real-world projects, and further develop my skills in a professional environment. I have strong reading comprehension of English technical documents and continuously improve my communication skills.</p>
+      <br>
+      <br> 
+      <h2 class="section-title">Education</h2>
+      <div>
+        <h3>BSc Computer Science – Cyber Security</h3>
+        <p>British University Vietnam | Aug 2022 – Sep 2025<br>
+        Scholarship: 30% tuition fee | IELTS: 7.0</p>
+      </div>
+      <h3>Certifications</h3>
+      <ul>  
+        <li>IELTS Certification score 7.0</li>
+        <li>Google Cyber Security Certificate (Google) – Feb 2025 - <a href="https://coursera.org/share/4671bc21ed16b36653b2531f3a138330"><u>Click to view Certificate</u></a></li>
+        <li>IBM Cybersecurity Analyst (IBM) –  May 2025 - <a href="https://coursera.org/share/a3044357dfe5a091c30446663684723c"><u>Click to view Certificate</u></a></li>
+        <li>Splunk Search Expert (Splunk) – Jun 2025 - <a href="https://coursera.org/share/7c8ca148d2ed222bc4cd380967276d48"><u>Click to view Certificate</u></a></li>
+        <li>Google IT Support Certificate (Google) – Apr 2025 - <a href="https://coursera.org/share/6db78820a3e1478917e330fb94c36bd0"><u>Click to view Certificate</u></a></li>
+      </ul>
+    </div> 
+  </section>
+  <br>
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>Performance Analysis of PWAs vs. Native Apps</h3>
+          <p><em>Oct 2024 – Apr 2025</em></p>
+          <p><a href="https://github.com/Lmquan1310/Performance-Analysis-of-Progressive-Web-Apps-vs-Native-Apps"><u>Click to view Project</u></a></p>
+          <ul>
+            <li>Measured CPU, memory & battery usage.</li>
+            <li>Enabled offline functionality & push notifications.</li>
+            <li>Conducted cross-OS performance benchmarks.</li>
+          </ul>
+        </div>
+        <div class="project-card">
+          <h3>Network Design & Security Configuration</h3>
+          <p><em>May 2024 – Jun 2024</em></p>
+          <p><a href="https://github.com/Lmquan1310/E-Commerce-Company-Proposed-Network-Design"><u>Click to view Project</u></a></p>
+          <ul>
+            <li>Multi-branch e-commerce topology with Layer 3 switches.</li>
+            <li>Cisco ASA firewalls, ACLs & dynamic routing.</li>
+            <li>Optimized for security, redundancy & performance.</li>
+          </ul>
+        </div>
+        <div class="project-card">
+          <h3>Blockchain Security Analysis</h3>
+          <p><em>October 2023 – December 2023</em></p>
+          <p><a href="https://github.com/Lmquan1310/Blockchain-Security-Report"><u>Click to view Project</u></a></p>
+          <ul>
+            <li>Identified vulnerabilities in smart contracts, consensus mechanisms, and network layers.</li>
+            <li>Assessed threats like Sybil attacks, 51% attacks, and double‑spending with real‑world examples.</li>
+            <li>Recommended cryptographic safeguards and regular audits to bolster security.</li>
+          </ul>
+        </div>
+        <div class="project-card">
+          <h3>Design & Develop a personal Digital Portfolio</h3>
+          <p><em>April 2023 –  June 2023</em></p>
+          <p><a href="https://quans-digital-portfolio-2004.web.app/"><u>Click to view Project</u></a></p>
+          <ul>
+            <li>Designed a personal digital portfolio using HTML, CSS, and JavaScript.</li>
+          </ul>
+        </div>
+        <div class="project-card">
+          <h3>Design & Develop a simple Hotel Management System in Python</h3>
+          <p><em>August 2022 – November 2022</em></p>
+          <p><a href="https://github.com/Lmquan1310/Hotel-Management-System"><u>Click to view Project</u></a></p>
+          <ul>
+            <li>Developed a graphical user interface (GUI) using Python's Tkinter module to manage hotel room statuses (Available, Reserved, Occupied) across three floors, with data persistence through text files.</li>
+            <li>Implemented dynamic status checking and updates for 12 rooms via dropdown selections and actionable buttons, providing real-time feedback using message boxes.</li>
+            <li> Integrated Python's Turtle module to draw a visual floor map of hotel rooms, enhancing user understanding of room distribution and layout.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <ul class="skills-list">
+        <li>Python</li>
+        <li>HTML5 & CSS3</li>
+        <li>JavaScript</li>
+        <li>Linux Bash</li>
+        <li>SQL</li>
+        <li>Wireshark</li>
+        <li>Splunk SIEM</li>
+        <li>English (IELTS 7.0)</li>
+        <li>Team Collaboration</li>
+        <li>Problem Solving</li>
+        <li>Presentation Skills</li>
+        <li>Responsibility</li>
+      </ul>
+    </div>
+  </section>
+  <br>
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact Me</h2>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/leeminquan2k4/" target="_blank" aria-label="Open facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/lm2uan_/" target="_blank" aria-label="Open Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.twitter.com/" target="_blank" aria-label="Open Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="www.linkedin.com/in/quan-le-minh-0810652a3" target="_blank" aria-label="Open Linkedin"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p style="margin-top:1rem; font-size:0.9rem;">Email: <a href="mailto:lmquan2k4@gmail.com">lmquan2k4@gmail.com</a> | Phone: 0378539695</p>
+      <p style="font-size:0.9rem;">LinkedIn: <a href="https://www.linkedin.com/in/quan-le-minh-0810652a3" target="_blank">quan-le-minh-0810652a3</a></p>
+    </div>
+  </section>
+
+  <footer class="visible">
+    <div class="container">
+      <p>© 2025 Lê Minh Quân. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="theme-toggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <script>
+    // Header shrink on scroll
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    // Smooth scroll
+    document.querySelectorAll('.nav a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    // Reveal sections
+    const sections = document.querySelectorAll('section, footer');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    sections.forEach(s => observer.observe(s));
+
+    // Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-theme');
+      const icon = themeToggle.querySelector('i');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+    });
+
+    // Mobile Menu
+    const createMobileMenu = () => {
+      const header = document.querySelector('header .container');
+      const nav = document.querySelector('.nav');
+      const mobileMenuBtn = document.createElement('button');
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      mobileMenuBtn.className = 'mobile-menu';
+      header.appendChild(mobileMenuBtn);
+
+      mobileMenuBtn.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+    };
+
+    if (window.innerWidth <= 768) {
+      createMobileMenu();
+    }
+  </script>
+</body>
+</html>
